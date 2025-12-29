@@ -3,6 +3,8 @@ npm create vite@latest my-project
 npm install tailwindcss @tailwindcss/vite
 npm install react-router-dom
 
+npm install embla-carousel-react embla-carousel-autoplay
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

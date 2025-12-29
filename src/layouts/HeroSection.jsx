@@ -1,5 +1,4 @@
 import React from 'react'
-import NavigationBar from './NavigationBar';
 import StandardButton from '../components/StandardButton';
 
 function HeroSection() {

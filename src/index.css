@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+
+@theme {
+    --color-brand-light: #e6e6e6;
+    --color-brand-militar: #5B576D;
+    --color-brand-base: #d9d9d9;
+    --color-brand-dark: #2A3439;
+    --text-color-brand-gray: #364153;
+    --font-brand-titles: 'Cambria', sans-serif;
+}
+
+body{
+    background-color: var(--color-brand-base);
+}

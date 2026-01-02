@@ -17,7 +17,7 @@ const TireCard = ({
   price,
   image_url,
 }) => (
-  <div className="bg-white shadow hover:border rounded-2xl md:w-5/12">
+  <div className="bg-white shadow hover:border rounded-2xl min-w-90 w-90">
     <img
       className=" h-48 w-48 mt-5 mx-auto bg-brand-base"
       src={image_url[0]}
@@ -39,7 +39,7 @@ const TireCard = ({
             <span className="border rounded px-2 py-0.5 bg-gray-100">Temporada: {season}</span>
           )}
         </div>
-        <p className="text-gray-800 mb-4 h-16">{description}</p>
+        <p className="text-gray-800 h-18 overflow-hidden text-wrap">{description}</p>
       </div>
       <div className="flex items-center justify-between">
         <span className="text-xl font-bold text-green-600">${price}</span>

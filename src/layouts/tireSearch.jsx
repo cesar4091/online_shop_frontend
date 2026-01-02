@@ -184,7 +184,7 @@ export default function TireSearch() {
   };
 
   return (
-    <div className="w-5/6 max-w-4xl mx-auto mt-3 p-6 bg-brand-light rounded-2xl shadow-sm">
+    <div className="m-0 w-11/12 max-w-4xl mx-auto mt-3 p-3 bg-brand-light rounded-2xl shadow-sm">
       <h2 className="font-brand-titles) text-3xl text-brand-dark) mb-6 font-bold">
         Find Your Tires
       </h2>
@@ -197,7 +197,7 @@ export default function TireSearch() {
             name="width"
             value={searchData.width}
             onChange={handleChange}
-            className="bg-white border-2 border-brand-base rounded-xl px-4 py-3 focus:border-brand-militar outline-none transition-colors"
+            className="px-4 py-3 bg-white border-2 border-brand-base rounded-xl focus:border-brand-militar outline-none transition-colors"
           >
             <option value="0">Select Width</option>
             <option value="195">195</option>

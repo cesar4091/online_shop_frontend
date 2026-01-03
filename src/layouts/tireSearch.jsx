@@ -2,6 +2,155 @@ import React, { useState } from 'react';
 import StandardButton from '../components/StandardButton.jsx';
 
 export default function TireSearch() {
+
+  const tiresDetails = [
+    {
+        "id": 1,
+        "barcode": "3528707222197",
+        "brand": "Michelin",
+        "model": "Primacy 4",
+        "tire_size": "205/55R16",
+        "width": 205,
+        "profile": 55,
+        "rim_diameter": 16,
+        "load_index": 91,
+        "speed_rating": "V",
+        "season": null,
+        "vehicle_type": null,
+        "construction": "Radial",
+        "type": "Tubeless",
+        "utqg": "unknown",
+        "origin": null,
+        "description": "Llantas Michelin Primacy 4 diseñadas para autos compactos y sedanes, excelente agarre en mojado y larga durabilidad.",
+        "price": "145.00",
+        "discount": "0.00",
+        "stock": 10,
+        "category_id": null,
+        "status": "active",
+        "image_url": [
+            "https://images.michelin.com/primacy4.jpg"
+        ],
+        "created_at": "2025-11-03T18:57:44.353Z",
+        "updated_at": "2025-11-03T18:57:44.353Z"
+    },
+    {
+        "id": 2,
+        "barcode": "3286340895213",
+        "brand": "Bridgestone",
+        "model": "Turanza T005",
+        "tire_size": "195/65R15",
+        "width": 195,
+        "profile": 65,
+        "rim_diameter": 15,
+        "load_index": 91,
+        "speed_rating": "H",
+        "season": null,
+        "vehicle_type": null,
+        "construction": "Radial",
+        "type": "Tubeless",
+        "utqg": "unknown",
+        "origin": null,
+        "description": "Turanza T005 ofrece control y seguridad en lluvia, ideal para uso urbano y carretera.",
+        "price": "120.00",
+        "discount": "0.00",
+        "stock": 12,
+        "category_id": null,
+        "status": "active",
+        "image_url": [
+            "https://images.bridgestone.com/turanza-t005.jpg"
+        ],
+        "created_at": "2025-11-03T18:57:44.353Z",
+        "updated_at": "2025-11-03T18:57:44.353Z"
+    },
+    {
+        "id": 3,
+        "barcode": "5452000829452",
+        "brand": "Goodyear",
+        "model": "Assurance TripleMax 2",
+        "tire_size": "185/65R15",
+        "width": 185,
+        "profile": 65,
+        "rim_diameter": 15,
+        "load_index": 88,
+        "speed_rating": "H",
+        "season": null,
+        "vehicle_type": null,
+        "construction": "Radial",
+        "type": "Tubeless",
+        "utqg": "unknown",
+        "origin": null,
+        "description": "Goodyear Assurance TripleMax 2 brinda frenado eficiente en mojado y confort en manejo diario.",
+        "price": "98.50",
+        "discount": "0.00",
+        "stock": 8,
+        "category_id": null,
+        "status": "active",
+        "image_url": [
+            "https://images.goodyear.com/assurance-triplemax2.jpg"
+        ],
+        "created_at": "2025-11-03T18:57:44.353Z",
+        "updated_at": "2025-11-03T18:57:44.353Z"
+    },
+    {
+        "id": 4,
+        "barcode": "8019227224370",
+        "brand": "Pirelli",
+        "model": "Cinturato P1 Plus",
+        "tire_size": "195/60R15",
+        "width": 195,
+        "profile": 60,
+        "rim_diameter": 15,
+        "load_index": 88,
+        "speed_rating": "V",
+        "season": null,
+        "vehicle_type": null,
+        "construction": "Radial",
+        "type": "Tubeless",
+        "utqg": "unknown",
+        "origin": null,
+        "description": "Cinturato P1 Plus, mezcla de rendimiento y confort con bajo consumo de combustible.",
+        "price": "110.00",
+        "discount": "0.00",
+        "stock": 15,
+        "category_id": null,
+        "status": "active",
+        "image_url": [
+            "https://images.pirelli.com/cinturato-p1plus.jpg"
+        ],
+        "created_at": "2025-11-03T18:57:44.353Z",
+        "updated_at": "2025-11-03T18:57:44.353Z"
+    },
+    {
+        "id": 5,
+        "barcode": "4019238053530",
+        "brand": "Continental",
+        "model": "ContiPremiumContact 6",
+        "tire_size": "225/45R17",
+        "width": 225,
+        "profile": 45,
+        "rim_diameter": 17,
+        "load_index": 94,
+        "speed_rating": "Y",
+        "season": null,
+        "vehicle_type": null,
+        "construction": "Radial",
+        "type": "Tubeless",
+        "utqg": "unknown",
+        "origin": null,
+        "description": "ContiPremiumContact 6 combina precisión de manejo con excelente agarre y confort.",
+        "price": "175.00",
+        "discount": "0.00",
+        "stock": 7,
+        "category_id": null,
+        "status": "active",
+        "image_url": [
+            "https://images.continental.com/contipremiumcontact6.jpg"
+        ],
+        "created_at": "2025-11-03T18:57:44.353Z",
+        "updated_at": "2025-11-03T18:57:44.353Z"
+    }
+]
+
   const [searchData, setSearchData] = useState({
     width: '',
     profile: '',
@@ -16,6 +165,8 @@ export default function TireSearch() {
     e.preventDefault();
     console.log("Searching for:", searchData);
     // Logic to filter or redirect goes here
+    let results = tiresDetails.filter(tire => tire.width === parseInt(searchData.width));
+    console.log(results)
   };
 
   return (

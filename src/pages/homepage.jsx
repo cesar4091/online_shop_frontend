@@ -14,7 +14,7 @@ function Home() {
       <TireSearch />
       <PromotionsCarousel />
       <Brands />
-      <hr class="border-x-slate-600 w-2/3 mx-auto"></hr>
+      <hr className="border-x-slate-600 w-2/3 mx-auto"></hr>
       <Footer />
     </>
   )

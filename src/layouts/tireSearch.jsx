@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import StandardButton from '../components/StandardButton.jsx';
+import TireCard from '../components/TireCard.jsx';
 
 export default function TireSearch() {
 
-  const tiresDetails = [
+  const tires=[
     {
         "id": 1,
         "barcode": "3528707222197",
@@ -28,7 +29,7 @@ export default function TireSearch() {
         "category_id": null,
         "status": "active",
         "image_url": [
-            "https://images.michelin.com/primacy4.jpg"
+            "https://www.tyrereviews.com/images/tyres/Michelin-Primacy-4.png"
         ],
         "created_at": "2025-11-03T18:57:44.353Z",
         "updated_at": "2025-11-03T18:57:44.353Z"
@@ -57,7 +58,7 @@ export default function TireSearch() {
         "category_id": null,
         "status": "active",
         "image_url": [
-            "https://images.bridgestone.com/turanza-t005.jpg"
+            "https://www.tyrereviews.com/images/tyres/Bridgestone-Turanza-T005.png"
         ],
         "created_at": "2025-11-03T18:57:44.353Z",
         "updated_at": "2025-11-03T18:57:44.353Z"
@@ -86,7 +87,7 @@ export default function TireSearch() {
         "category_id": null,
         "status": "active",
         "image_url": [
-            "https://images.goodyear.com/assurance-triplemax2.jpg"
+            "https://www.goodyear.com.my/wp-content/uploads/ATM2_45.png"
         ],
         "created_at": "2025-11-03T18:57:44.353Z",
         "updated_at": "2025-11-03T18:57:44.353Z"
@@ -115,7 +116,7 @@ export default function TireSearch() {
         "category_id": null,
         "status": "active",
         "image_url": [
-            "https://images.pirelli.com/cinturato-p1plus.jpg"
+            "https://images.simpletire.com/images/q_auto/line-images/9162/9162-sidetread/pirelli-cinturato-p1-plus.png"
         ],
         "created_at": "2025-11-03T18:57:44.353Z",
         "updated_at": "2025-11-03T18:57:44.353Z"
@@ -144,18 +145,32 @@ export default function TireSearch() {
         "category_id": null,
         "status": "active",
         "image_url": [
-            "https://images.continental.com/contipremiumcontact6.jpg"
+            "https://continentaltire.com/sites/default/files/styles/square_medium/public/media/image/2024-08/ct_webpage_premiumcontact6_l3qt_600x600_oe.png?itok=If3EneeJ"
         ],
         "created_at": "2025-11-03T18:57:44.353Z",
         "updated_at": "2025-11-03T18:57:44.353Z"
     }
-]
-
+];
+  let results = tires;
+  const [searchedTires, setSearchedTires] = useState([]);
   const [searchData, setSearchData] = useState({
-    width: '',
-    profile: '',
-    rim: ''
+    width: 0,
+    profile: 0,
+    rim: 0
   });
+
+  function findTires(searchData){
+    const width = parseInt(searchData.width);
+    const profile = parseInt(searchData.profile);
+    const rim = parseInt(searchData.rim);
+
+    results = tires;
+    results = width!=0 ? results.filter((tire) => tire.width === width): results;
+    results = profile!=0 ? results.filter((tire) => tire.profile === profile): results;
+    results = rim!=0 ? results.filter((tire) => tire.rim_diameter === rim): results;
+
+    setSearchedTires(results);
+  }
 
   const handleChange = (e) => {
     setSearchData({ ...searchData, [e.target.name]: e.target.value });
@@ -165,12 +180,11 @@ export default function TireSearch() {
     e.preventDefault();
     console.log("Searching for:", searchData);
     // Logic to filter or redirect goes here
-    let results = tiresDetails.filter(tire => tire.width === parseInt(searchData.width));
-    console.log(results)
+    findTires(searchData);
   };
 
   return (
-    <div className="w-5/6 max-w-4xl mx-auto mt-3 p-6 bg-brand-light rounded-2xl shadow-sm">
+    <div className="m-0 w-11/12 max-w-4xl mx-auto mt-3 p-3 bg-brand-light rounded-2xl shadow-sm">
       <h2 className="font-brand-titles) text-3xl text-brand-dark) mb-6 font-bold">
         Find Your Tires
       </h2>
@@ -183,9 +197,9 @@ export default function TireSearch() {
             name="width"
             value={searchData.width}
             onChange={handleChange}
-            className="bg-white border-2 border-brand-base rounded-xl px-4 py-3 focus:border-brand-militar outline-none transition-colors"
+            className="px-4 py-3 bg-white border-2 border-brand-base rounded-xl focus:border-brand-militar outline-none transition-colors"
           >
-            <option value="">Select Width</option>
+            <option value="0">Select Width</option>
             <option value="195">195</option>
             <option value="205">205</option>
             <option value="225">225</option>
@@ -201,7 +215,7 @@ export default function TireSearch() {
             onChange={handleChange}
             className="bg-white border-2 border-brand-base rounded-xl px-4 py-3 focus:border-brand-militar outline-none transition-colors"
           >
-            <option value="">Select Profile</option>
+            <option value="0">Select Profile</option>
             <option value="45">45</option>
             <option value="55">55</option>
             <option value="65">65</option>
@@ -217,7 +231,7 @@ export default function TireSearch() {
             onChange={handleChange}
             className="bg-white border-2 border-brand-base rounded-xl px-4 py-3 focus:border-brand-militar outline-none transition-colors"
           >
-            <option value="">Select Rim</option>
+            <option value="0">Select Rim</option>
             <option value="15">R15</option>
             <option value="17">R17</option>
             <option value="19">R19</option>
@@ -229,6 +243,11 @@ export default function TireSearch() {
           Search Tires
         </StandardButton>
       </form>
+
+      <div className='flex flex-wrap gap-3 justify-center pt-5'>
+        { searchedTires.map((tire) => ( <TireCard key={tire.id} {...tire} /> )) }
+        {    console.log(searchedTires)}
+      </div>
     </div>
   );
 }

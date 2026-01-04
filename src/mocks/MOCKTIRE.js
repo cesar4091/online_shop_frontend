@@ -1,4 +1,6 @@
 export const MOCK_TIRE = {
+    id: 1,
+    barcode: "4019238756123",
     brand: "continental",
     model: "ContiPremiumContact 6",
     width: 205,
@@ -11,6 +13,8 @@ export const MOCK_TIRE = {
     description: "ContiPremiumContact 6 combina precisión de manejo con excelente agarre y confort.",
     price: "175.00",
     image_url: [
-        "https://continentaltire.com/sites/default/files/styles/square_medium/public/media/image/2024-08/ct_webpage_premiumcontact6_l3qt_600x600_oe.png?itok=If3EneeJ"
+        { id: 1, src: "https://d31f1ehqijlcua.cloudfront.net/n/7/9/4/c/794ceb2e8f32d7b2ade757b1b678c7f643567efd_Tire_391890_01.jpg", alt: "Main View" },
+        { id: 2, src: "https://d31f1ehqijlcua.cloudfront.net/n/d/a/5/8/da58ba1cc2ca3f93ae8d1a7f7875d88591cfeead_Tire_391890_02.jpg", alt: "Side View" },
+        { id: 3, src: "https://d31f1ehqijlcua.cloudfront.net/n/b/f/1/f/bf1fb86d8516f2b411c01821596cc587cda096db_Tire_391890_03.jpg", alt: "Tread Detail" },
     ],
 }

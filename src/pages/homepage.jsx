@@ -3,7 +3,7 @@ import HeroSection from '../layouts/HeroSection'
 import Footer from '../layouts/Footer'
 import Brands from '../layouts/Brands'
 import TireSearch from '../layouts/tireSearch'
-import PromotionsCarousel from '../layouts/PromotionsCarousel'
+import PromotionsCarousel from '../components/PromotionsCarousel'
 import ProductDetails from './productDetails'
 
 
@@ -11,7 +11,6 @@ function Home() {
 
   return (
     <>
-      <ProductDetails />
       <NavigationBar />
       <TireSearch />
       <PromotionsCarousel />

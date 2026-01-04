@@ -38,12 +38,6 @@ export default function GalleryWithThumbnails({ className, IMAGES=[] }) {
                 alt={img.alt}
                 className="absolute inset-0 w-full h-full object-contain p-4"
               />
-              {/* Brand Logo Overlay */}
-              <img
-                src="src/assets/logos/neumaniaticos-logo.svg"
-                className="absolute top-4 left-4 w-10 opacity-50"
-                alt="Logo"
-              />
             </div>
           ))}
         </div>

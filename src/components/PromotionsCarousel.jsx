@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
-import StandardButton from '../components/StandardButton'
+import StandardButton from './StandardButton'
 
 const PROMOTIONS = [
   { id: 1, src: 'src/assets/promoImages/Promotion1.png', alt: 'Summer Sale 20% Off' },

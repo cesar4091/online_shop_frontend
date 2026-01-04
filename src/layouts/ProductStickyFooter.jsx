@@ -4,9 +4,11 @@ import { ChevronLeftIcon, ShoppingCartIcon, UserCircleIcon, Bars3Icon, PlusIcon,
 import StandardButton from '../components/StandardButton';
 import SimpleButton from '../components/SimpleButton';
 import AdditemsControls from '../components/AddItemsControls.jsx';
+import { useCart } from '../context/CartContext'; // Importar hook
 
-export default function ProductStickyFooter({ cartCount = 2, price }) {
+export default function ProductStickyFooter({ price }) {
   const navigate = useNavigate();
+  const { totalItems } = useCart(); // Usar el hook para obtener totalItems
 
   return (
     <div className="fixed bottom-0 left-0 w-full z-50 flex flex-col shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
@@ -26,9 +28,9 @@ export default function ProductStickyFooter({ cartCount = 2, price }) {
           {/* Cart */}
           <button className="relative p-2 text-brand-militar hover:text-brand-dark">
             <ShoppingCartIcon className="w-7 h-7" />
-            {cartCount > 0 && (
+            {totalItems > 0 && (
               <span className="absolute top-1 right-0 bg-green-950 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                {cartCount}
+                {totalItems}
               </span>
             )}
           </button>

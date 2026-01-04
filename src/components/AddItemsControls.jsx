@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import {PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
 import SimpleButton from './SimpleButton';
+import { useCart } from '../context/CartContext';
+import { MOCK_TIRES } from '../mocks/MOCKTIRE';
 
 export default function AddItemsControls() {
+    const { addToCart } = useCart(); // Usar el hook para obtener la función addToCart
     const [quantity, setQuantity] = useState(1);
 
     const handleIncrement = () => setQuantity(q => q + 1);
     const handleDecrement = () => setQuantity(q => (q > 1 ? q - 1 : 1));
-    const handleAddToCart = () => console.log(`Added ${quantity} items to cart`);
+    const handleAddToCart = () => {
+    addToCart(MOCK_TIRES[0], quantity);
+    // Opcional: Mostrar una alerta o toast de confirmación
+    alert("Producto agregado!");
+    setQuantity(1); // Resetear contador
+  };
 
     return (
         <div className="bg-white border-t border-brand-base px-4 py-3 flex gap-4 items-center">

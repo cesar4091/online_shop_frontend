@@ -7,6 +7,7 @@ import { MOCK_TIRES } from "../mocks/MOCKTIRE";
 import ProductStickyFooter from '../layouts/ProductStickyFooter';
 import AdditemsControls from '../components/AddItemsControls.jsx';
 import GalleryWithThumbnails from '../components/ProductGalleryWithThumbnails.jsx';
+import NotFound from './notFound.jsx';
 
 function ProductDetails() {
   const { id } = useParams(); // 2. Usar useParams para obtener el ID del producto de la URL
@@ -15,8 +16,9 @@ function ProductDetails() {
   const product = MOCK_TIRES[parseInt(id, 10)-1]; // Asumiendo que los IDs son 1-based y los índices del array son 0-based
   console.log(useParams().id);
   const MOCK_TIRE = product;
-  const IMAGES = MOCK_TIRE.image_url;
-  if (!product) { console.error("Producto no encontrado");}
+  if (!product) { console.error("Producto no encontrado"); return <NotFound />}
+
+  const IMAGES = MOCK_TIRE.image_url || [];
  return (
   <div className="bg-brand-base">
     <NavigationBar />

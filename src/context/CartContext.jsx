@@ -10,6 +10,9 @@ export function CartProvider({ children }) {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  //Estado de visibilidad del Drawer
+  const [isCartOpen, setIsCartOpen] = useState(false); // Por defecto cerrado
+
   // 3. Guardar en LocalStorage cada vez que cambie el carrito
   useEffect(() => {
     localStorage.setItem('shopping-cart', JSON.stringify(cart));
@@ -28,11 +31,15 @@ export function CartProvider({ children }) {
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
-      } else {
-        return [...currentCart, { ...product, quantity }];
       }
+      return [...currentCart, { ...product, quantity }];
     });
+    setIsCartOpen(true); // NUEVO: Abrir el carrito automáticamente al agregar
   };
+
+  // NUEVO: Funciones para abrir/cerrar manualmente
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
 
   // Remover producto
   const removeFromCart = (productId) => {
@@ -46,7 +53,8 @@ export function CartProvider({ children }) {
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, totalItems, totalPrice }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, totalItems, 
+    totalPrice, isCartOpen, openCart, closeCart }}>
       {children}
     </CartContext.Provider>
   );

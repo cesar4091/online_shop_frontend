@@ -4,11 +4,13 @@ import Home from './pages/homepage'
 import Login from './pages/login.jsx'
 import ProductDetails from './pages/productDetails.jsx';
 import NotFound from './pages/notFound.jsx';
+import CartDrawer from './components/CartDrawer.jsx';
 
 function App() {
 
   return (
     <BrowserRouter>
+      <CartDrawer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

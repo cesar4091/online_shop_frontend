@@ -246,7 +246,6 @@ export default function TireSearch() {
 
       <div className='flex flex-wrap gap-3 justify-center pt-5'>
         { searchedTires.map((tire) => ( <TireCard key={tire.id} {...tire} /> )) }
-        {    console.log(searchedTires)}
       </div>
     </div>
   );

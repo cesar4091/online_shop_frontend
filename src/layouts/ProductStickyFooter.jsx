@@ -5,6 +5,7 @@ import StandardButton from '../components/StandardButton';
 import SimpleButton from '../components/SimpleButton';
 import AdditemsControls from '../components/AddItemsControls.jsx';
 import { useCart } from '../context/CartContext'; // Importar hook
+import CartButton from '../components/CartButton.jsx';
 
 export default function ProductStickyFooter({ price }) {
   const navigate = useNavigate();
@@ -25,15 +26,7 @@ export default function ProductStickyFooter({ price }) {
             <ChevronLeftIcon className="w-7 h-7" />
           </button>
 
-          {/* Cart */}
-          <button className="relative p-2 text-brand-militar hover:text-brand-dark">
-            <ShoppingCartIcon className="w-7 h-7" />
-            {totalItems > 0 && (
-              <span className="absolute top-1 right-0 bg-green-950 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                {totalItems}
-              </span>
-            )}
-          </button>
+          <CartButton />
 
           {/* User */}
           <button className="p-2 text-brand-militar hover:text-brand-dark">

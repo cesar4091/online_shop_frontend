@@ -26,7 +26,7 @@ function TireCard({
         <img className="absolute right-3 -top-2 mx-auto w-23 rounded" src={`src/assets/logos/${brand}.svg`} />
         <img
           className=" h-48 w-48 mt-5 mx-auto "
-          src={image_url[0]}
+          src={image_url[0].src}
           alt={`${brand} ${model}`}
         />
       </div>

@@ -67,7 +67,7 @@ export default function CartDrawer() {
                         <h3>{item.model}</h3>
                         <p className="ml-4">${(item.price * item.quantity).toFixed(2)}</p>
                       </div>
-                      <p className="mt-1 text-sm text-gray-500">{item.width}/{item.profile} R{item.rim}</p>
+                      <p className="mt-1 text-sm text-gray-500">{item.width}/{item.profile} R{item.rim_diameter}</p>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
                       <p className="text-gray-500">Cant: {item.quantity}</p>

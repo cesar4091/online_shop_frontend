@@ -30,12 +30,12 @@ function ProductDetails() {
         <ProductStickyFooter price={MOCK_TIRE.price} />
       </div>
 
-      <div className=" mx-auto pt-6 flex flex-col place-content-center lg:flex-row gap-1 lg:gap-0 max-w-7xl ">
+      <div className="p-10 mx-auto pt-6 flex flex-col place-content-center lg:flex-row gap-1 lg:gap-0 max-w-7xl ">
         <GalleryWithThumbnails
           className="mx-auto lg:m-0 w-10/12 sm:w-80 lg:w-106 lg:h-full"
           IMAGES={IMAGES} />
 
-        <div className='px-10 pb-50  lg:w-2/3'>
+        <div className='pl-10 pb-50  lg:w-2/3'>
           <img className="mx-auto w-30 rounded" src={`../src/assets/logos/${MOCK_TIRE.brand}.svg`} />
           <h3 className="text-center text-3xl font-bold text-gray-900">{MOCK_TIRE.model}</h3>
           <p className="text-center text-2xl text-gray-700">

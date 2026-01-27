@@ -1,106 +1,147 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import StandardButton from '../components/StandardButton.jsx';
 import TireCard from '../components/TireCard.jsx';
 import { MOCK_TIRES } from '../mocks/MOCKTIRE.js';
 
 export default function TireSearch() {
 
-  const tires= MOCK_TIRES;
-  let results = tires;
+  const tires = MOCK_TIRES;
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchedTires, setSearchedTires] = useState([]);
-  const [searchData, setSearchData] = useState({
-    width: 0,
-    profile: 0,
-    rim: 0
-  });
+  const [userInteracted, setUserInteracted] = useState(false);
 
-  function findTires(searchData){
-    const width = parseInt(searchData.width);
-    const profile = parseInt(searchData.profile);
-    const rim = parseInt(searchData.rim);
+  // Helper object to parse URL params safely
+  const searchData = {
+    width: parseInt(searchParams.get('width') || "0"),
+    profile: parseInt(searchParams.get('profile') || "0"),
+    rim: parseInt(searchParams.get('rim') || "0")
+  };
 
-    results = tires;
-    results = width!=0 ? results.filter((tire) => tire.width === width): results;
-    results = profile!=0 ? results.filter((tire) => tire.profile === profile): results;
-    results = rim!=0 ? results.filter((tire) => tire.rim_diameter === rim): results;
+  useEffect(() => {
+    // Destructuring for cleaner code
+    const { width, profile, rim } = searchData;
+
+    // Strict comparison (using !== instead of !=)
+    if (width !== 0 || profile !== 0 || rim !== 0) {
+      setUserInteracted(true);
+    }
+
+    let results = tires;
+
+    // Strict filtering logic
+    results = width !== 0 ? results.filter((tire) => tire.width === width) : results;
+    results = profile !== 0 ? results.filter((tire) => tire.profile === profile) : results;
+    results = rim !== 0 ? results.filter((tire) => tire.rim_diameter === rim) : results;
 
     setSearchedTires(results);
-  }
+  }, [searchParams]); 
 
   const handleChange = (e) => {
-    setSearchData({ ...searchData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    
+    // We create a temporary object representing the NEXT state
+    // Note: inputs return strings, so we must be careful with types if we compare manually here
+    const newParams = { 
+      width: searchData.width.toString(),
+      profile: searchData.profile.toString(),
+      rim: searchData.rim.toString(),
+      [name]: value 
+    };
+    
+    // Clean up "0" values. 
+    // Since 'value' from select is a string "0", we compare against string "0" strictly
+    if (newParams.width === "0") delete newParams.width;
+    if (newParams.profile === "0") delete newParams.profile;
+    if (newParams.rim === "0") delete newParams.rim;
+
+    setSearchParams(newParams);
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("Searching for:", searchData);
-    // Logic to filter or redirect goes here
-    findTires(searchData);
   };
 
   return (
     <div className="m-0 w-11/12 max-w-4xl mx-auto mt-3 p-3 bg-brand-light rounded-2xl shadow-sm">
-      <h2 className="font-brand-titles) text-3xl text-brand-dark) mb-6 font-bold">
-        Find Your Tires
+      <h2 className="font-brand-titles text-3xl text-brand-dark mb-6 font-bold">
+        Encuentra Tus Llantas
       </h2>
 
       <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
         {/* Width Selector */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-bold text-(--color-brand-gray) ml-1">Width</label>
+          <label className="text-sm font-bold text-brand-gray ml-1">Ancho</label>
           <select 
             name="width"
             value={searchData.width}
             onChange={handleChange}
             className="px-4 py-3 bg-white border-2 border-brand-base rounded-xl focus:border-brand-militar outline-none transition-colors"
           >
-            <option value="0">Select Width</option>
+            <option value="0">Seleccionar Ancho</option>
+            <option value="185">185</option>
+            <option value="190">190</option>
             <option value="195">195</option>
             <option value="205">205</option>
+            <option value="215">215</option>
             <option value="225">225</option>
           </select>
         </div>
 
         {/* Profile Selector */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-bold text-(--color-brand-gray) ml-1">Profile</label>
+          <label className="text-sm font-bold text-brand-gray ml-1">Perfil</label>
           <select 
             name="profile"
             value={searchData.profile}
             onChange={handleChange}
             className="bg-white border-2 border-brand-base rounded-xl px-4 py-3 focus:border-brand-militar outline-none transition-colors"
           >
-            <option value="0">Select Profile</option>
+            <option value="0">Seleccionar Perfil</option>
             <option value="45">45</option>
             <option value="55">55</option>
+            <option value="60">60</option>
             <option value="65">65</option>
+            <option value="75">75</option>
           </select>
         </div>
 
         {/* Rim Size Selector */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-bold text-(--color-brand-gray) ml-1">Rim Size</label>
+          <label className="text-sm font-bold text-brand-gray ml-1">Rin</label>
           <select 
             name="rim"
             value={searchData.rim}
             onChange={handleChange}
             className="bg-white border-2 border-brand-base rounded-xl px-4 py-3 focus:border-brand-militar outline-none transition-colors"
           >
-            <option value="0">Select Rim</option>
+            <option value="0">Seleccionar Rin</option>
             <option value="15">R15</option>
+            <option value="16">R16</option>
             <option value="17">R17</option>
-            <option value="19">R19</option>
+            <option value="18">R18</option>
           </select>
         </div>
 
         {/* Search Button */}
         <StandardButton type="submit" className="w-full">
-          Search Tires
+          Buscar Llantas
         </StandardButton>
       </form>
 
       <div className='flex flex-wrap gap-3 justify-center pt-5'>
-        { searchedTires.map((tire) => ( <TireCard key={tire.id} {...tire} /> )) }
+        {
+          searchedTires.length === 0 && userInteracted ? (
+            <div className="text-center py-4">
+               <p className="text-brand-militar font-bold">No hay resultados.</p>
+               <p className="text-brand-gray text-sm">Por favor intenta con otras medidas.</p>
+            </div>
+          ) : (
+            searchedTires.map((tire) => (
+              <TireCard key={tire.id} {...tire} />
+            ))
+          )
+        }
       </div>
     </div>
   );

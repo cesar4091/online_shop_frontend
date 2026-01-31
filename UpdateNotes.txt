@@ -15,8 +15,11 @@ npm install @heroicons/react
 
 
 ------------------------UPDATE NOTES-------------------
+------------Jan 31, 2026---------------
+-Connect product details with DB
+
 ------------Jan 30, 2026---------------
--Connecting products API with searchTires element.
+-Connected products API with searchTires element.
 
 ------------JAN 26, 2026---------------
 -Implemented query search functionality so when selecting a product and coming back the filters are not lost.

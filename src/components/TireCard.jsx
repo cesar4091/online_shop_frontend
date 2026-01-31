@@ -22,7 +22,7 @@ function TireCard({
   return (
     <div className="bg-white shadow hover:border rounded-2xl min-w-90 w-90">
       <div className="relative px-3">
-        <p className="absolute rounded w-10 bg-brand-base text-center text-sm text-black ">999</p>
+        <p className="absolute rounded w-10 bg-brand-base text-center text-sm text-black ">{String(id).padStart(3, '0')}</p>
         <img className="absolute right-3 -top-2 mx-auto w-23 rounded" src={`src/assets/logos/${brand}.svg`} />
         <img
           className=" h-48 w-48 mt-5 mx-auto "
@@ -52,7 +52,7 @@ function TireCard({
         <div className="flex items-center justify-between">
           <span className="text-xl font-bold text-green-600">${price}</span>
           <SimpleButton type="button" onClick={() => navigate(`/productDetails/${id}`)} className="px-4 py-2">
-            Comprar
+            Ver Detalles
           </SimpleButton>
         </div>
       </div>

@@ -1,6 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const getTires = async () => {
+  console.log("Fetching all tires from API:", API_URL);
   try {
     const endpoint = `${API_URL}/products/`;
     const response = await fetch(endpoint);
@@ -23,7 +24,7 @@ export const getTires = async () => {
  */
 export const getTireById = async (id) => {
   try {
-    const response = await fetch(`${API_URL}/tires/${id}`);
+    const response = await fetch(`${API_URL}/products/${id}`);
     if (!response.ok) throw new Error('Tire not found');
     return await response.json();
   } catch (error) {

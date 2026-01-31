@@ -4,17 +4,20 @@ import SimpleButton from './SimpleButton';
 import { useCart } from '../context/CartContext';
 import { MOCK_TIRES } from '../mocks/MOCKTIRE';
 import { useParams } from 'react-router-dom';
+import { useTireCatalog } from '../hooks/useTireCatalog';
 
 export default function AddItemsControls() {
     const { addToCart } = useCart(); // Usar el hook para obtener la función addToCart
     const [quantity, setQuantity] = useState(1);
     const { id } = useParams();
 
+    const { tires } = useTireCatalog();
+
     const handleIncrement = () => setQuantity(q => q + 1);
     const handleDecrement = () => setQuantity(q => (q > 1 ? q - 1 : 1));
     const handleAddToCart = () => {
-        console.log(MOCK_TIRES.find(tire => tire.id === parseInt(id,10) ) );
-        addToCart(MOCK_TIRES.find(tire => tire.id === parseInt(id,10) ), quantity);
+        console.log(tires.find(tire => tire.id === parseInt(id,10) ) );
+        addToCart(tires.find(tire => tire.id === parseInt(id,10) ), quantity);
         // Opcional: Mostrar una alerta o toast de confirmación
         alert("Producto agregado!");
         setQuantity(1); // Resetear contador

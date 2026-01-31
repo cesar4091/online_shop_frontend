@@ -1,0 +1,23 @@
+
+npm create vite@latest my-project
+npm install tailwindcss @tailwindcss/vite
+npm install react-router-dom
+
+npm install embla-carousel-react embla-carousel-autoplay
+
+npm install @heroicons/react
+
+------------FUTURE IMPLEMENTATIONS-----------------
+*Password reset process
+*Only sell if tires are in stock
+*Ability to view product details when clicking on them from the cart.
+*Mostrar productos como agotados
+
+
+------------------------UPDATE NOTES-------------------
+------------Jan 30, 2026---------------
+-Connecting products API with searchTires element.
+
+------------JAN 26, 2026---------------
+-Implemented query search functionality so when selecting a product and coming back the filters are not lost.
+-Fixed UI bugs

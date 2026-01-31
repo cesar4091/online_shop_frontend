@@ -3,13 +3,15 @@ import { useSearchParams } from 'react-router-dom';
 import StandardButton from '../components/StandardButton.jsx';
 import TireCard from '../components/TireCard.jsx';
 import { MOCK_TIRES } from '../mocks/MOCKTIRE.js';
+import { useTireCatalog } from '../hooks/useTireCatalog';
 
 export default function TireSearch() {
 
-  const tires = MOCK_TIRES;
+  //const tires = MOCK_TIRES;
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchedTires, setSearchedTires] = useState([]);
-  const [userInteracted, setUserInteracted] = useState(false);
+
+  const {tires, isLoading, error} = useTireCatalog(searchParams);
 
   // Helper object to parse URL params safely
   const searchData = {
@@ -17,25 +19,6 @@ export default function TireSearch() {
     profile: parseInt(searchParams.get('profile') || "0"),
     rim: parseInt(searchParams.get('rim') || "0")
   };
-
-  useEffect(() => {
-    // Destructuring for cleaner code
-    const { width, profile, rim } = searchData;
-
-    // Strict comparison (using !== instead of !=)
-    if (width !== 0 || profile !== 0 || rim !== 0) {
-      setUserInteracted(true);
-    }
-
-    let results = tires;
-
-    // Strict filtering logic
-    results = width !== 0 ? results.filter((tire) => tire.width === width) : results;
-    results = profile !== 0 ? results.filter((tire) => tire.profile === profile) : results;
-    results = rim !== 0 ? results.filter((tire) => tire.rim_diameter === rim) : results;
-
-    setSearchedTires(results);
-  }, [searchParams]); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -130,18 +113,36 @@ export default function TireSearch() {
       </form>
 
       <div className='flex flex-wrap gap-3 justify-center pt-5'>
-        {
-          searchedTires.length === 0 && userInteracted ? (
-            <div className="text-center py-4">
-               <p className="text-brand-militar font-bold">No hay resultados.</p>
-               <p className="text-brand-gray text-sm">Por favor intenta con otras medidas.</p>
-            </div>
-          ) : (
-            searchedTires.map((tire) => (
-              <TireCard key={tire.id} {...tire} />
-            ))
-          )
-        }
+        {/* State 1: Loading */}
+        {isLoading && (
+          <div className="flex flex-col items-center justify-center text-brand-militar">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-dark mb-2"></div>
+            <p className="text-brand-militar font-bold">Buscando las mejores opciones...</p>
+          </div>
+        )}
+
+        {/* State 2: Error */}
+        {error && !isLoading && (
+          <div className="p-4 bg-red-50 text-red-600 rounded-lg border border-red-200">
+            <p className="font-bold">Error de conexión</p>
+            <p className="text-sm">No pudimos conectar con el servidor. Intenta nuevamente.</p>
+          </div>
+        )}
+
+        {/* State 3: Empty Results */}
+        {!isLoading && !error && tires.length === 0 && (
+          <div className="text-center py-4">
+              <p className="text-brand-militar font-bold">No se encontraron resultados.</p>
+              <p className="text-brand-gray text-sm">Prueba ajustando los filtros de búsqueda.</p>
+          </div>
+        )}
+
+        {/* State 4: Success */}
+        {!isLoading && !error && tires.length > 0 && (
+          tires.map((tire) => (
+            <TireCard key={tire.id} {...tire} />
+          ))
+        )}
       </div>
     </div>
   );

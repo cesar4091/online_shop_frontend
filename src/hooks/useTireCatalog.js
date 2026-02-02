@@ -14,7 +14,6 @@ export function useTireCatalog(searchParams = null) {
       // Intentamos obtener los datos
       const data = await getTires();
       setAllTires(data);
-      console.log("Tires fetched:", data);
     } catch (err) {
       // Si falla, capturamos el error
       setError(err);
@@ -54,6 +53,5 @@ export function useTireCatalog(searchParams = null) {
     return results;
   }, [allTires, searchParams]); // Dependencias
 
-  console.log("Filtered Tires:", filteredTires);
   return { tires: filteredTires, isLoading, error };
 }

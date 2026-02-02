@@ -11,7 +11,6 @@ export const getTires = async () => {
     }
 
     const data = await response.json();
-    console.log(data)
     return data; // Returns the array of tires
   } catch (error) {
     console.error("Error fetching tires:", error);

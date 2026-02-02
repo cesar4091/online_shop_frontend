@@ -2,18 +2,46 @@ import { useState } from 'react';
 import StandardButton from '../components/StandardButton';
 import { useNavigate, Link } from 'react-router-dom';
 import HomeButton from '../components/neumaniaticosButton';
+import { loginUser } from '../services/authService.js';
+import { useAuth } from '../hooks/useAuth.js';
 
 export default function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleSubmit = (e) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+
+        // Limpiamos el error cuando el usuario empieza a escribir de nuevo
+        if (error) setError(null);
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Logging in with:", { email, password });
+        console.log("Logging in with:", { formData });
+        setIsLoading(true);
+        setError(null);
+        try {
+            await login(formData); // Llama al Context -> Service -> API
+            navigate('/'); // Si no hay error, redirige
+        } catch (err) {
+            setError(err.message || 'Error en inicio de sesión');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    const navigate = useNavigate();
     return (
         <div className="min-h-screen flex items-center justify-center bg-brand-light p-4">
 
@@ -32,11 +60,12 @@ export default function LoginPage() {
                         <label className="block text-sm font-semibold text-slate-700 mb-1">Email Address</label>
                         <input
                             type="email"
+                            name="email"
                             required
                             className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-militar focus:border-transparent transition-all"
                             placeholder="name@company.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={formData.email}
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -47,11 +76,12 @@ export default function LoginPage() {
                         </div>
                         <input
                             type={showPassword ? "text" : "password"}
+                            name="password"
                             required
                             className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-militar transition-all"
                             placeholder="•••"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={formData.password}
+                            onChange={handleChange}
                         />
                         {/* Toggle Visibility Icon/Button */}
                         <button
@@ -63,7 +93,16 @@ export default function LoginPage() {
                         </button>
                     </div>
 
-                    <StandardButton className='w-full'>Login</StandardButton>
+                    {/* Error Message */}
+                    {error && (
+                        <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg text-center font-medium border border-red-100">
+                            {error}
+                        </div>
+                    )}
+
+                    <StandardButton type="submit" className='w-full' disabled={isLoading}>
+                        {isLoading ? 'Ingresando...' : 'Iniciar Sesión'}
+                    </StandardButton>
                 </form>
 
                 {/* Divider */}

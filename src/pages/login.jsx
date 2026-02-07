@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import StandardButton from '../components/StandardButton';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import HomeButton from '../components/neumaniaticosButton';
-import { loginUser } from '../services/authService.js';
 import { useAuth } from '../hooks/useAuth.js';
 
 export default function LoginPage() {
     const { login } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -16,6 +16,8 @@ export default function LoginPage() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const from = location.state?.from?.pathname || "/";
 
     const handleChange = (e) => {
         setFormData({
@@ -29,12 +31,11 @@ export default function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Logging in with:", { formData });
         setIsLoading(true);
         setError(null);
         try {
             await login(formData); // Llama al Context -> Service -> API
-            navigate('/'); // Si no hay error, redirige
+            navigate(from, { replace: true }); // Si no hay error, redirige
         } catch (err) {
             setError(err.message || 'Error en inicio de sesión');
         } finally {

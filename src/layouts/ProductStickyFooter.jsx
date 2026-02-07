@@ -6,8 +6,9 @@ import SimpleButton from '../components/SimpleButton';
 import AdditemsControls from '../components/AddItemsControls.jsx';
 import { useCart } from '../context/CartContext'; // Importar hook
 import CartButton from '../components/CartButton.jsx';
+import UserLoginButton from '../components/userLoginButon.jsx';
 
-export default function ProductStickyFooter({ price }) {
+export default function ProductStickyFooter() {
   const navigate = useNavigate();
   const { totalItems } = useCart(); // Usar el hook para obtener totalItems
 
@@ -29,9 +30,7 @@ export default function ProductStickyFooter({ price }) {
           <CartButton />
 
           {/* User */}
-          <button className="p-2 text-brand-militar hover:text-brand-dark">
-            <UserCircleIcon className="w-7 h-7" />
-          </button>
+          <UserLoginButton />
 
           {/* Menu */}
           <button className="p-2 text-brand-militar hover:text-brand-dark">

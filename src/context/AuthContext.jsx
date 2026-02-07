@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     await logoutUser(); // Avisamos al backend para que destruya la cookie
     setUser(null); // Limpiamos el estado local
-    window.location.href = '/'; // Opcional: Recarga dura para limpiar caché
+    window.location.reload(); // Opcional: Recarga dura para limpiar caché
   };
 
   const value = {

@@ -15,6 +15,10 @@ npm install @heroicons/react
 
 
 ------------------------UPDATE NOTES-------------------
+------------Feb 07, 2026---------------
+-Created UserLoginComponent
+-When logging in the url is saved and then reloaded after logging in/out
+
 ------------Jan 31, 2026---------------
 -Connect product details with DB
 

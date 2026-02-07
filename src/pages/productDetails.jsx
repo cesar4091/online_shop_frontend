@@ -39,7 +39,7 @@ function ProductDetails() {
     <div className="bg-brand-base">
       <NavigationBar />
       <div className='lg:hidden'>
-        <ProductStickyFooter price={product.price} />
+        <ProductStickyFooter />
       </div>
 
       <div className="p-10 mx-auto pt-6 flex flex-col place-content-center lg:flex-row gap-1 lg:gap-0 max-w-7xl ">

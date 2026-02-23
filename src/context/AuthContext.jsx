@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { loginUser, logoutUser, checkSession } from '../services/authService';
+import {registerUser, loginUser, logoutUser, checkSession } from '../services/authService';
 
 export const AuthContext = createContext();
 
@@ -26,6 +26,13 @@ export function AuthProvider({ children }) {
     verifyUser();
   }, []);
 
+  const register = async (formData) => {
+    // 1. Llamamos a la API para crear el usuario
+    const data = await registerUser(formData);
+    console.log("Usuario registrado:", data);
+    return data; // Retornamos la data por si la página de registro quiere mostrar un mensaje
+  };
+
   // 2. Acción de Login
   const login = async (formData) => {
     // Nota: loginUser ya lanza error si falla, así que el componente lo captura
@@ -44,6 +51,7 @@ export function AuthProvider({ children }) {
     user,
     isAuthenticated: !!user,
     isLoading,
+    register,
     login,
     logout
   };

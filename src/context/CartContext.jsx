@@ -46,6 +46,9 @@ export function CartProvider({ children }) {
     setCart(currentCart => currentCart.filter(item => item.id !== productId));
   };
 
+  //Vaciar el carrito 
+  const clearCart = () => setCart([]);
+
   // Calcular total de items (para la burbuja roja)
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -53,7 +56,7 @@ export function CartProvider({ children }) {
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, totalItems, 
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, totalItems, 
     totalPrice, isCartOpen, openCart, closeCart }}>
       {children}
     </CartContext.Provider>

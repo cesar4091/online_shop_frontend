@@ -1,9 +1,44 @@
-const API_URL = "";
+const API_URL = import.meta.env.VITE_API_URL;
 
 /**
  * Sends login credentials to the server
  * @param {Object} credentials - { username, password }
  */
+
+export const registerUser = async (userData) => {
+  const payload = {
+    ...userData,
+    status: 'active'
+  };
+
+  const response = await fetch(`${API_URL}/users`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    let errorMessage = 'Error al registrar el usuario';
+    try {
+      errorMessage = JSON.parse(errorText).message || errorMessage;
+    } catch (e) {}
+    throw new Error(errorMessage);
+  }
+
+  // ✅ SOLUCIÓN DEFINITIVA:
+  const textResponse = await response.text();
+  
+  try {
+    // Intentamos parsearlo. Si es un espacio en blanco o texto plano, esto fallará
+    // y saltará al catch sin romper la aplicación.
+    return textResponse.trim() ? JSON.parse(textResponse) : {}; 
+  } catch (error) {
+    console.warn("La API no devolvió un JSON válido, devolviendo texto crudo:", textResponse);
+    return { message: textResponse }; // Devolvemos lo que sea que haya respondido
+  }
+};
+
 export const loginUser = async (credentials) => {
   try {
     const response = await fetch(`${API_URL}/auth/local`, {

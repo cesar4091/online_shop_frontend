@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import HomeButton from "../components/neumaniaticosButton";
+import { useAuth } from '../hooks/useAuth';
+
 
 export default function Register() {
+  const { register } = useAuth();
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -29,13 +33,26 @@ export default function Register() {
     return err;
   }
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const err = validate();
     setErrors(err);
     if (Object.keys(err).length === 0) {
-      alert("Registration successful! Redirecting to login...");
-      navigate("/login");
+      try {
+        console.log("Registering user with data:", form);
+        await register({
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          tax_id: form.taxId, // opcional
+          phone: form.phone    // opcional
+        });
+        // Si todo sale bien, rediriges al login
+        alert("Registration successful! Redirecting to login...");
+        navigate("/login");
+      } catch (error) {
+        alert(error.message);
+      }
     }
   }
 

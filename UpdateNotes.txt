@@ -8,17 +8,21 @@ npm install embla-carousel-react embla-carousel-autoplay
 npm install @heroicons/react
 
 ------------FUTURE IMPLEMENTATIONS-----------------
-*Create checkout page and logic
 *Password reset process
 *Only sell if tires are in stock
 *Ability to view product details when clicking on them from the cart.
 *Mostrar productos como agotados
-
+*connect google login/registration with frontend
 
 ------------------------UPDATE NOTES-------------------
+------------Mar 01, 2026--------------
+**pendiente encontrar user ID antes de crear la orden para que no aparezca como undefined
+-Connect checkout page with the backend API
+-Added a THANK YOU page to show after creating the order
+
 ------------Feb 22, 2026---------------
 -User registration form is now connected to the backend
--Create a checkout page and trigger confirmation email
+-Created a checkout page and trigger confirmation email
 
 ------------Feb 07, 2026---------------
 -Created UserLoginComponent

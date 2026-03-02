@@ -39,6 +39,37 @@ export const registerUser = async (userData) => {
   }
 };
 
+export const registerGuestUser = async (name, phone, email) => {
+  const payload = {
+    name: name || "Invitado",
+    email: email, // Email único para evitar conflictos
+    phone: phone || "0000000000",
+  };
+  const response = await fetch(`${API_URL}/users/newGuest`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    let errorMessage = 'Error al crear usuario invitado';
+    try {
+      errorMessage = JSON.parse(errorText).message || errorMessage;
+    } catch (e) {}
+    throw new Error(errorMessage);
+  }
+
+  const textResponse = await response.text();
+  
+  try {
+    return textResponse.trim() ? JSON.parse(textResponse) : {}; 
+  } catch (error) {
+    console.warn("La API no devolvió un JSON válido, devolviendo texto crudo:", textResponse);
+    return { message: textResponse };
+  }
+};
+
 export const loginUser = async (credentials) => {
   try {
     const response = await fetch(`${API_URL}/auth/local`, {

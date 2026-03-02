@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext'; // Ajusta la ruta
 import NavigationBar from '../layouts/NavigationBar';
+import { useAuth } from '../hooks/useAuth';
+import { createOrder, getUserByEmail } from '../services/shopService';
+import { registerUser } from '../services/authService';
 
 export default function CheckoutPage() {
-    const { cart, totalPrice, totalItems, clearCart } = useCart(); // Asumiendo que agregaste clearCart
+    const { cart, totalPrice, totalItems, clearCart } = useCart();
     const navigate = useNavigate();
+    const { user, isAuthenticated, registerGuest } = useAuth(); // Para mostrar info del usuario o prellenar el formulario
 
     // Estado del formulario de envío
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
+        firstName: user?.name?.split(' ')[0] || '', // Prellenar con nombre del usuario si existe
+        lastName: user?.name?.split(' ').slice(1).join(' ') || '', // Prellenar con apellido del usuario si existe
         address: '',
         city: '',
-        phone: ''
+        phone: '',
+        email: user?.email || '' // Prellenar con email del usuario si existe
     });
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -37,7 +42,6 @@ export default function CheckoutPage() {
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-        console.log(cart)
     };
 
     const handleSubmit = async (e) => {
@@ -45,19 +49,56 @@ export default function CheckoutPage() {
         setIsProcessing(true);
 
         try {
-            // AQUÍ IRÍA TU LLAMADA A LA API PARA CREAR LA ORDEN
-            // const order = await createOrder({ items: cart, shipping: formData, total: totalPrice });
+            // 1. Buscamos al usuario
+            let userResponse = await getUserByEmail(formData.email);
+            let finalUser = null;
 
-            // Simulamos tiempo de red
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            // 2. Verificamos si realmente encontramos algo 
+            // (Maneja tanto si devuelve null como si devuelve un array vacío [])
+            const userExists = userResponse && (!Array.isArray(userResponse) || userResponse.length > 0);
 
-            // Éxito
-            alert("¡Pedido realizado con éxito!");
-            if (clearCart) clearCart(); // Limpiamos el carrito
-            navigate('/'); // Redirigimos al inicio o a una página de "Gracias"
+            if (!userExists) {
+                // Si no existe, lo registramos. Asumimos que esto devuelve un OBJETO: { id: 5, ... }
+                finalUser = await registerGuest(formData);
+            } else {
+                // Si existe, extraemos el objeto. 
+                // Si es un array sacamos el [0], si ya era objeto lo dejamos igual.
+                finalUser = Array.isArray(userResponse) ? userResponse[0] : userResponse;
+            }
+
+            console.log("Usuario resuelto para la orden:", finalUser);
+            // 2. Armas el objeto EXACTAMENTE como lo pide tu API
+            // Mapeamos el carrito para enviar solo lo que el backend necesita (ej: id y cantidad)
+            
+            const orderPayload = {
+                userId: finalUser.id,
+                customer_email: formData.email,
+                customer_name: `${formData.firstName} ${formData.lastName}`,
+                tax_id: formData.nit,
+                shipping_address: formData.address,
+                city: formData.city,
+                phone: formData.phone,
+                total_amount: totalPrice,
+                // Adaptamos el carrito al formato de la API
+                items: cart.map(item => ({
+                    product_id: item.id,
+                    quantity: item.quantity,
+                    price_at_purchase: item.price // Buena práctica: guardar el precio al momento de comprar
+                }))
+            };
+
+            // 3. Llamas al servicio
+            const result = await createOrder(orderPayload);
+
+            // 4. Si todo salió bien
+            alert("¡Pedido realizado con éxito! Tu número de orden es: " + result.orderId);
+            clearCart();
+            navigate('/thanks', {
+                state: { orderId: result.orderId || result.id }
+            }); // Redirige a la página de agradecimiento con el ID de la orden
 
         } catch (error) {
-            alert("Hubo un error procesando tu pedido.");
+            alert(error.message); // Muestra el error si falló algo en el backend
         } finally {
             setIsProcessing(false);
         }
@@ -98,7 +139,20 @@ export default function CheckoutPage() {
                                             />
                                         </div>
                                     </div>
-
+                                    <div>
+                                        <label className="block text-sm font-bold text-brand-dark mb-2">Teléfono de contacto</label>
+                                        <input
+                                            required type="tel" name="phone" value={formData.phone} onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-brand-dark mb-2">Correo electrónico</label>
+                                        <input
+                                            required type="email" name="email" value={formData.email} onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
+                                        />
+                                    </div>
                                     <div>
                                         <label className="block text-sm font-bold text-brand-dark mb-2">Dirección Completa</label>
                                         <input
@@ -113,13 +167,6 @@ export default function CheckoutPage() {
                                             <label className="block text-sm font-bold text-brand-dark mb-2">Ciudad / Municipio</label>
                                             <input
                                                 required type="text" name="city" value={formData.city} onChange={handleInputChange}
-                                                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-brand-dark mb-2">Teléfono de contacto</label>
-                                            <input
-                                                required type="tel" name="phone" value={formData.phone} onChange={handleInputChange}
                                                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
                                             />
                                         </div>

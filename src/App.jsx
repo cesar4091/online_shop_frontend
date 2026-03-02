@@ -7,6 +7,7 @@ import NotFound from './pages/notFound.jsx';
 import CartDrawer from './components/CartDrawer.jsx';
 import Register from './pages/registration_.jsx';
 import CheckoutPage from './pages/CheckoutPage.jsx';
+import ThankYouPage from './layouts/ThankYouPage.jsx';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/productDetails/:id" element={ <ProductDetails />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/thanks" element={<ThankYouPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

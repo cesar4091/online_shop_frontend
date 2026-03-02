@@ -39,7 +39,6 @@ export default function Register() {
     setErrors(err);
     if (Object.keys(err).length === 0) {
       try {
-        console.log("Registering user with data:", form);
         await register({
           name: form.name,
           email: form.email,
@@ -48,7 +47,7 @@ export default function Register() {
           phone: form.phone    // opcional
         });
         // Si todo sale bien, rediriges al login
-        alert("Registration successful! Redirecting to login...");
+        alert("Registro exitoso, redirigiendo al login...");
         navigate("/login");
       } catch (error) {
         alert(error.message);
@@ -57,7 +56,7 @@ export default function Register() {
   }
 
   function handleGoogleRegister() {
-    alert("Google registration not implemented in this demo.");
+    alert("Registro con google no implementado aun en el frontend, ya funciona en el backend...");
   }
 
   return (
@@ -161,7 +160,7 @@ export default function Register() {
             type="submit"
             className="w-full mt-4 py-2 rounded bg-black text-white font-semibold hover:bg-brand-dark transition"
           >
-            Register
+            Registrarse
           </button>
         </form>
       </div>

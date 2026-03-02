@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import {registerUser, loginUser, logoutUser, checkSession } from '../services/authService';
+import {registerUser, registerGuestUser, loginUser, logoutUser, checkSession } from '../services/authService';
 
 export const AuthContext = createContext();
 
@@ -33,6 +33,12 @@ export function AuthProvider({ children }) {
     return data; // Retornamos la data por si la página de registro quiere mostrar un mensaje
   };
 
+  const registerGuest = async (formData) => {
+    const data = await registerGuestUser(formData.name, formData.phone, formData.email);
+    console.log("Usuario invitado registrado:", data);
+    return data; // Retornamos la data por si la página de checkout quiere mostrar un mensaje
+  }
+
   // 2. Acción de Login
   const login = async (formData) => {
     // Nota: loginUser ya lanza error si falla, así que el componente lo captura
@@ -52,6 +58,7 @@ export function AuthProvider({ children }) {
     isAuthenticated: !!user,
     isLoading,
     register,
+    registerGuest,
     login,
     logout
   };

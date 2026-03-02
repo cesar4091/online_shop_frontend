@@ -51,8 +51,8 @@ export default function LoginPage() {
                 <HomeButton />
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-slate-900">Welcome Back</h1>
-                    <p className="text-slate-500 mt-2">Please enter your details to sign in</p>
+                    <h1 className="text-3xl font-bold text-slate-900">Bienvenido</h1>
+                    <p className="text-slate-500 mt-2">Ingresa tus credenciales para loguearte</p>
                 </div>
 
                 {/* Form */}
@@ -120,7 +120,7 @@ export default function LoginPage() {
                 </div>
 
                 <p className="text-center text-slate-500 text-sm mt-8">
-                    <Link className="text-blue-600 font-semibold hover:underline" to="/register" >Don't have an account? Click here to register</Link>
+                    <Link className="text-blue-600 font-semibold hover:underline" to="/register" >No tienes una cuenta? Registrate aqui</Link>
                 </p>
             </div>
         </div>

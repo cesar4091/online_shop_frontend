@@ -31,3 +31,36 @@ export const getTireById = async (id) => {
     throw error;
   }
 };
+
+export const getUserByEmail = async (email) => {
+  try {
+    const response = await fetch(`${API_URL}/users/search?email=${encodeURIComponent(email)}`);
+    if (!response.ok) return null; // Si no se encuentra el usuario, devolvemos null en vez de lanzar error
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching user by email:", error);
+    throw error;
+  }
+};
+
+export const createOrder = async (orderData) => {
+  try {
+    const response = await fetch(`${API_URL}/orders`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderData),
+      credentials: 'include', // Asegura que se envíen las cookies de sesión
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || 'Error creating order');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating order:", error);
+    throw error;
+  }
+};

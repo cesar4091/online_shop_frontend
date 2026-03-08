@@ -17,7 +17,7 @@ export default function CheckoutPage() {
         lastName: user?.name?.split(' ').slice(1).join(' ') || '', // Prellenar con apellido del usuario si existe
         address: '',
         city: '',
-        phone: '',
+        phone: user?.phone || '',
         email: user?.email || '' // Prellenar con email del usuario si existe
     });
     const [isProcessing, setIsProcessing] = useState(false);
@@ -58,43 +58,47 @@ export default function CheckoutPage() {
             const userExists = userResponse && (!Array.isArray(userResponse) || userResponse.length > 0);
 
             if (!userExists) {
+                formData.name = `${formData.firstName} ${formData.lastName}`; //enviar un nombre completo al backend
                 // Si no existe, lo registramos. Asumimos que esto devuelve un OBJETO: { id: 5, ... }
                 finalUser = await registerGuest(formData);
+                finalUser = finalUser.user; // Ajusta esto según la estructura real de tu respuesta
             } else {
-                // Si existe, extraemos el objeto. 
-                // Si es un array sacamos el [0], si ya era objeto lo dejamos igual.
-                finalUser = Array.isArray(userResponse) ? userResponse[0] : userResponse;
+            // Si existe, extraemos el objeto. 
+            // Si es un array sacamos el [0], si ya era objeto lo dejamos igual.
+            finalUser = Array.isArray(userResponse) ? userResponse[0] : userResponse;
+            console.log("Respuesta del backend al buscar usuario por email:", userResponse);
+            console.log("Usuario resuelto para la orden:", finalUser);
             }
 
-            console.log("Usuario resuelto para la orden:", finalUser);
-            // 2. Armas el objeto EXACTAMENTE como lo pide tu API
-            // Mapeamos el carrito para enviar solo lo que el backend necesita (ej: id y cantidad)
-            
+
+            // 3. Ahora finalUser SIEMPRE será un objeto limpio { id: ..., email: ... }
             const orderPayload = {
-                userId: finalUser.id,
-                customer_email: formData.email,
-                customer_name: `${formData.firstName} ${formData.lastName}`,
+                user_id: finalUser.id,
+                email: formData.email,
+                name: `${formData.firstName} ${formData.lastName}`,
                 tax_id: formData.nit,
                 shipping_address: formData.address,
+                billing_address: formData.address,
+                shipping_cost: 25,
                 city: formData.city,
                 phone: formData.phone,
                 total_amount: totalPrice,
-                // Adaptamos el carrito al formato de la API
+                notes: 'orden de prueba desde frontend',
                 items: cart.map(item => ({
                     product_id: item.id,
                     quantity: item.quantity,
-                    price_at_purchase: item.price // Buena práctica: guardar el precio al momento de comprar
+                    price_at_purchase: item.price
                 }))
             };
-
+            console.log("Payload de orden a enviar al backend:", orderPayload);
             // 3. Llamas al servicio
-            const result = await createOrder(orderPayload);
+            //const result = await createOrder(orderPayload);
 
             // 4. Si todo salió bien
-            alert("¡Pedido realizado con éxito! Tu número de orden es: " + result.orderId);
+            alert("¡Pedido realizado con éxito! Tu número de orden es: " + result.orderNumber);
             clearCart();
             navigate('/thanks', {
-                state: { orderId: result.orderId || result.id }
+                state: { orderId: result.orderNumber || result.id }
             }); // Redirige a la página de agradecimiento con el ID de la orden
 
         } catch (error) {

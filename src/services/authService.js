@@ -26,7 +26,6 @@ export const registerUser = async (userData) => {
     throw new Error(errorMessage);
   }
 
-  // ✅ SOLUCIÓN DEFINITIVA:
   const textResponse = await response.text();
   
   try {

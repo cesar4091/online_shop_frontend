@@ -7,7 +7,7 @@ import NotFound from './pages/notFound.jsx';
 import CartDrawer from './components/CartDrawer.jsx';
 import Register from './pages/registration_.jsx';
 import CheckoutPage from './pages/CheckoutPage.jsx';
-import ThankYouPage from './layouts/ThankYouPage.jsx';
+import ThankYouPage from './pages/ThankYouPage.jsx';
 
 function App() {
 

@@ -43,13 +43,15 @@ export const getUserByEmail = async (email) => {
   }
 };
 
-export const createOrder = async (orderData) => {
+export const createOrder = async (orderData) => {      
+  console.log(orderData);
   try {
     const response = await fetch(`${API_URL}/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      
       body: JSON.stringify(orderData),
       credentials: 'include', // Asegura que se envíen las cookies de sesión
     });

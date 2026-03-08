@@ -22,7 +22,7 @@ export default function ThankYouPage() {
         </div>
         
         <h1 className="text-3xl font-brand-titles font-bold text-brand-dark mb-4">
-          ¡Gracias por tu compra!
+          ¡Orden Enviada!
         </h1>
         
         <p className="text-brand-gray mb-6 text-base">

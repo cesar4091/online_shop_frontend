@@ -15,6 +15,11 @@ npm install @heroicons/react
 *connect google login/registration with frontend
 
 ------------------------UPDATE NOTES-------------------
+------------Mar 07, 2026--------------
+**Correct contact info logic
+-Guest user is created when generating an order
+-Checkout page is now generating the order number and redirecting to a thank you page.
+
 ------------Mar 01, 2026--------------
 **pendiente encontrar user ID antes de crear la orden para que no aparezca como undefined
 -Connect checkout page with the backend API

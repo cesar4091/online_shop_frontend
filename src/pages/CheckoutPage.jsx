@@ -106,7 +106,7 @@ export default function CheckoutPage() {
             };
             console.log("Payload de orden a enviar al backend:", orderPayload);
             // 3. Llamas al servicio
-            //const result = await createOrder(orderPayload);
+            const result = await createOrder(orderPayload);
 
             // 4. Si todo salió bien
             alert("¡Pedido realizado con éxito! Tu número de orden es: " + result.orderNumber);

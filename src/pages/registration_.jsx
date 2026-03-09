@@ -74,7 +74,7 @@ export default function Register() {
           onClick={handleGoogleRegister}
           className="w-full flex items-center justify-center mb-6 py-2 border border-gray-300 rounded-md bg-gray-100 hover:bg-brand-base text-gray-700 font-semibold"
         >
-          <img src="src/assets/logos/google-icon.png" className="w-4 h-4 mx-2" alt="Google" />
+          <img src="/logos/google-icon.png" className="w-4 h-4 mx-2" alt="Google" />
           Register with Google
         </button>
         <form onSubmit={handleSubmit} className="space-y-4">

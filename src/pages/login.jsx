@@ -114,7 +114,7 @@ export default function LoginPage() {
                 {/* Social Buttons */}
                 <div className="w-2/3 flex flex-col gap-4 mx-auto">
                     <button className="flex items-center justify-center gap-2 p-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors text-sm font-medium">
-                        <img src="src/assets/logos/google-icon.png" className="w-4 h-4" alt="Google" />Sign In with Google
+                        <img src="/logos/google-icon.png" className="w-4 h-4" alt="Google" />Sign In with Google
                     </button>
 
                 </div>

@@ -4,9 +4,9 @@ import Autoplay from 'embla-carousel-autoplay'
 import StandardButton from './StandardButton'
 
 const PROMOTIONS = [
-  { id: 1, src: 'src/assets/promoImages/Promotion1.png', alt: 'Summer Sale 20% Off' },
-  { id: 2, src: 'src/assets/promoImages/Promotion2.png', alt: 'Buy 3 Get 1 Free on Tires' },
-  { id: 3, src: 'src/assets/promoImages/Promotion3.png', alt: 'Free Alignment with Rim Purchase' },
+  { id: 1, src: '/promoImages/Promotion1.png', alt: 'Summer Sale 20% Off' },
+  { id: 2, src: '/promoImages/Promotion2.png', alt: 'Buy 3 Get 1 Free on Tires' },
+  { id: 3, src: '/promoImages/Promotion3.png', alt: 'Free Alignment with Rim Purchase' },
 ];
 
 export default function PromotionsCarousel() {

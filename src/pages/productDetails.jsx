@@ -48,7 +48,7 @@ function ProductDetails() {
           IMAGES={IMAGES} />
 
         <div className='pl-10 pb-50  lg:w-2/3'>
-          <img className="mx-auto w-30 rounded" src={`../src/assets/logos/${product.brand}.svg`} />
+          <img className="mx-auto w-30 rounded" src={`/logos/${String(product.brand).toLowerCase()}.svg`} />
           <h3 className="text-center text-3xl font-bold text-gray-900">{product.model}</h3>
           <p className="text-center text-2xl text-gray-700">
             <span className="ml-1 font-bold">{product.width}/{product.profile} R{product.rim_diameter}</span>

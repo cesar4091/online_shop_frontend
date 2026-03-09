@@ -16,6 +16,8 @@ npm install @heroicons/react
 
 ------------------------UPDATE NOTES-------------------
 ------------Mar 08, 2026--------------
+-Moved images to public because they were not loading after deployment
+***DEPLOYMENT SUCCESSFUL AT https://online-shop-frontend-zzp8.onrender.com***
 -Created a page ViewOrderDetails to view the oder status.
 -Contact info is updated every time a new order is created and it is snapshotted in the orders table.
 -Added notes field in checkout page

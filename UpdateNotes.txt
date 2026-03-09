@@ -15,7 +15,7 @@ npm install @heroicons/react
 *connect google login/registration with frontend
 
 ------------------------UPDATE NOTES-------------------
-------------Mar 07, 2026--------------
+------------Mar 08, 2026--------------
 -Created a page ViewOrderDetails to view the oder status.
 -Contact info is updated every time a new order is created and it is snapshotted in the orders table.
 -Added notes field in checkout page

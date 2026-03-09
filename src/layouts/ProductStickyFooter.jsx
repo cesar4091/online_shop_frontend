@@ -6,7 +6,7 @@ import SimpleButton from '../components/SimpleButton';
 import AdditemsControls from '../components/AddItemsControls.jsx';
 import { useCart } from '../context/CartContext'; // Importar hook
 import CartButton from '../components/CartButton.jsx';
-import UserLoginButton from '../components/userLoginButon.jsx';
+import UserLoginButton from '../components/UserLoginButon.jsx';
 
 export default function ProductStickyFooter() {
   const navigate = useNavigate();

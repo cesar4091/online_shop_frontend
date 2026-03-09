@@ -8,6 +8,7 @@ import CartDrawer from './components/CartDrawer.jsx';
 import Register from './pages/registration_.jsx';
 import CheckoutPage from './pages/CheckoutPage.jsx';
 import ThankYouPage from './pages/ThankYouPage.jsx';
+import ViewOrderDetails from './pages/ViewOrderDetails.jsx';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/productDetails/:id" element={ <ProductDetails />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/thanks" element={<ThankYouPage />} />
+        <Route path="/viewOrder/:token" element={<ViewOrderDetails />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -9,16 +9,19 @@ import { registerUser } from '../services/authService';
 export default function CheckoutPage() {
     const { cart, totalPrice, totalItems, clearCart } = useCart();
     const navigate = useNavigate();
-    const { user, isAuthenticated, registerGuest } = useAuth(); // Para mostrar info del usuario o prellenar el formulario
+    const { user, isAuthenticated, registerGuest, updateContactInfo } = useAuth(); // Para mostrar info del usuario o prellenar el formulario
 
     // Estado del formulario de envío
     const [formData, setFormData] = useState({
         firstName: user?.name?.split(' ')[0] || '', // Prellenar con nombre del usuario si existe
         lastName: user?.name?.split(' ').slice(1).join(' ') || '', // Prellenar con apellido del usuario si existe
-        address: '',
-        city: '',
         phone: user?.phone || '',
-        email: user?.email || '' // Prellenar con email del usuario si existe
+        email: user?.email || '', // Prellenar con email del usuario si existe
+        nit: user?.tax_id || '',
+        address: '',
+        province: '',
+        city: '',
+        notes: ''
     });
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -63,27 +66,38 @@ export default function CheckoutPage() {
                 finalUser = await registerGuest(formData);
                 finalUser = finalUser.user; // Ajusta esto según la estructura real de tu respuesta
             } else {
-            // Si existe, extraemos el objeto. 
-            // Si es un array sacamos el [0], si ya era objeto lo dejamos igual.
-            finalUser = Array.isArray(userResponse) ? userResponse[0] : userResponse;
-            console.log("Respuesta del backend al buscar usuario por email:", userResponse);
-            console.log("Usuario resuelto para la orden:", finalUser);
+                // Si existe, extraemos el objeto. 
+                // Si es un array sacamos el [0], si ya era objeto lo dejamos igual.
+                finalUser = Array.isArray(userResponse) ? userResponse[0] : userResponse;
+                console.log("Respuesta del backend al buscar usuario por email:", userResponse);
+                console.log("Usuario resuelto para la orden:", finalUser);
             }
 
+            //Actualizamos la info de contacto del usuario registrado (en caso de que haya cambiado algo en el formulario)
+            await updateContactInfo({
+                id: finalUser.id,
+                phone: formData.phone,
+                email: formData.email,
+                tax_id: formData.nit,
+                name: `${formData.firstName} ${formData.lastName}`
+            });
 
             // 3. Ahora finalUser SIEMPRE será un objeto limpio { id: ..., email: ... }
             const orderPayload = {
                 user_id: finalUser.id,
-                email: formData.email,
-                name: `${formData.firstName} ${formData.lastName}`,
+                user_email: formData.email,
+                user_phone: formData.phone,
                 tax_id: formData.nit,
+
+                shipping_name: `${formData.firstName} ${formData.lastName}`,
                 shipping_address: formData.address,
                 billing_address: formData.address,
+                shipping_province: formData.province,
+                shipping_city: formData.city,
                 shipping_cost: 25,
-                city: formData.city,
-                phone: formData.phone,
-                total_amount: totalPrice,
+
                 notes: 'orden de prueba desde frontend',
+
                 items: cart.map(item => ({
                     product_id: item.id,
                     quantity: item.quantity,
@@ -143,12 +157,21 @@ export default function CheckoutPage() {
                                             />
                                         </div>
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-bold text-brand-dark mb-2">Teléfono de contacto</label>
-                                        <input
-                                            required type="tel" name="phone" value={formData.phone} onChange={handleInputChange}
-                                            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
-                                        />
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="block text-sm font-bold text-brand-dark mb-2">Teléfono de contacto</label>
+                                            <input
+                                                required type="tel" name="phone" value={formData.phone} onChange={handleInputChange}
+                                                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-brand-dark mb-2">NIT</label>
+                                            <input
+                                                required type="text" name="nit" value={formData.nit} onChange={handleInputChange}
+                                                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
+                                            />
+                                        </div>
                                     </div>
                                     <div>
                                         <label className="block text-sm font-bold text-brand-dark mb-2">Correo electrónico</label>
@@ -168,12 +191,27 @@ export default function CheckoutPage() {
 
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div>
+                                            <label className="block text-sm font-bold text-brand-dark mb-2">Provincia / Departamento</label>
+                                            <input
+                                                required type="text" name="province" value={formData.province} onChange={handleInputChange}
+                                                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
+                                            />
+                                        </div>
+                                        <div>
                                             <label className="block text-sm font-bold text-brand-dark mb-2">Ciudad / Municipio</label>
                                             <input
                                                 required type="text" name="city" value={formData.city} onChange={handleInputChange}
                                                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
                                             />
                                         </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-brand-dark mb-2">Notas Especiales</label>
+                                        <input
+                                            required type="text" name="notes" value={formData.notes} onChange={handleInputChange}
+                                            placeholder="Instrucciones especiales para la entrega..."
+                                            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
+                                        />
                                     </div>
 
                                     <button

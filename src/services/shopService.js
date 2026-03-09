@@ -44,7 +44,6 @@ export const getUserByEmail = async (email) => {
 };
 
 export const createOrder = async (orderData) => {      
-  console.log(orderData);
   try {
     const response = await fetch(`${API_URL}/orders`, {
       method: 'POST',
@@ -63,6 +62,26 @@ export const createOrder = async (orderData) => {
     return await response.json();
   } catch (error) {
     console.error("Error creating order:", error);
+    throw error;
+  }
+};
+
+export const getOrderDetailsByToken = async (token) => {
+  try {
+    const response = await fetch(`${API_URL}/orders/v1/order-access/${token}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('No pudimos encontrar la información de este pedido.');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching order details:", error);
     throw error;
   }
 };

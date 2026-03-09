@@ -16,7 +16,9 @@ npm install @heroicons/react
 
 ------------------------UPDATE NOTES-------------------
 ------------Mar 07, 2026--------------
-**Correct contact info logic
+-Created a page ViewOrderDetails to view the oder status.
+-Contact info is updated every time a new order is created and it is snapshotted in the orders table.
+-Added notes field in checkout page
 -Guest user is created when generating an order
 -Checkout page is now generating the order number and redirecting to a thank you page.
 

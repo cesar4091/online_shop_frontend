@@ -7,14 +7,16 @@ const API_URL = import.meta.env.VITE_API_URL;
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   // 1. Efecto Inicial: Verificar cookie al cargar la App
   useEffect(() => {
     const verifyUser = async () => {
       try {
         const userData = await checkSession(); // Llama a /auth/me
+        console.log("checkSession result:", userData);
         if (userData) {
           setUser(userData);
+          isAuthenticated = true;
           console.log("Sesión restaurada para usuario:", userData);
         }
       } catch (error) {
@@ -73,13 +75,14 @@ export function AuthProvider({ children }) {
   // 3. Acción de Logout
   const logout = async () => {
     await logoutUser(); // Avisamos al backend para que destruya la cookie
+    isAuthenticated = false;
     setUser(null); // Limpiamos el estado local
     window.location.reload(); // Opcional: Recarga dura para limpiar caché
   };
 
   const value = {
     user,
-    isAuthenticated: !!user,
+    isAuthenticated,
     isLoading,
     register,
     registerGuest,

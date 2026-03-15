@@ -15,7 +15,10 @@ npm install @heroicons/react
 *connect google login/registration with frontend
 
 ------------------------UPDATE NOTES-------------------
+------------Mar 14, 2026--------------
+-Fixed a bug where when ordering and going back to home the name that just ordered as a guest was showing up as signed in.
 ------------Mar 08, 2026--------------
+-Corrected Camel Case bug when accessing the images urls.
 -Moved images to public because they were not loading after deployment
 ***DEPLOYMENT SUCCESSFUL AT https://online-shop-frontend-zzp8.onrender.com***
 -Created a page ViewOrderDetails to view the oder status.

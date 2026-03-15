@@ -102,7 +102,7 @@ export const checkSession = async () => {
       credentials: 'include', // <--- Envía la cookie automáticamente
     });
 
-    console.log("checkSession response status:", response.status);
+    console.log("checkSession response status:", response);
     if (response.ok) {
       return await response.json(); // Retorna el usuario si la cookie es válida
     }

@@ -168,7 +168,7 @@ export default function CheckoutPage() {
                                         <div>
                                             <label className="block text-sm font-bold text-brand-dark mb-2">NIT</label>
                                             <input
-                                                required type="text" name="nit" value={formData.nit} onChange={handleInputChange}
+                                                type="text" name="nit" placeholder='CF' value={formData.nit} onChange={handleInputChange}
                                                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
                                             />
                                         </div>
@@ -184,7 +184,7 @@ export default function CheckoutPage() {
                                         <label className="block text-sm font-bold text-brand-dark mb-2">Dirección Completa</label>
                                         <input
                                             required type="text" name="address" value={formData.address} onChange={handleInputChange}
-                                            placeholder="Calle, número, colonia..."
+                                            placeholder="Casa, calle, colonia..."
                                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
                                         />
                                     </div>
@@ -208,7 +208,7 @@ export default function CheckoutPage() {
                                     <div>
                                         <label className="block text-sm font-bold text-brand-dark mb-2">Notas Especiales</label>
                                         <input
-                                            required type="text" name="notes" value={formData.notes} onChange={handleInputChange}
+                                            type="text" name="notes" value={formData.notes} onChange={handleInputChange}
                                             placeholder="Instrucciones especiales para la entrega..."
                                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-militar focus:border-transparent outline-none transition-all"
                                         />

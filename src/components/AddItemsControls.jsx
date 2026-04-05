@@ -16,12 +16,8 @@ export default function AddItemsControls() {
     const handleIncrement = () => setQuantity(q => q + 1);
     const handleDecrement = () => setQuantity(q => (q > 1 ? q - 1 : 1));
     const handleAddToCart = () => {
-        console.log(tires.find(tire => tire.id === parseInt(id,10) ) );
         addToCart(tires.find(tire => tire.id === parseInt(id,10) ), quantity);
-        // Opcional: Mostrar una alerta o toast de confirmación
-        alert("Producto agregado!");
         setQuantity(1); // Resetear contador
-
     };
 
     return (

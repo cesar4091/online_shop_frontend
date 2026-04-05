@@ -9,12 +9,15 @@ npm install @heroicons/react
 
 ------------FUTURE IMPLEMENTATIONS-----------------
 *Password reset process
-*Only sell if tires are in stock
 *Ability to view product details when clicking on them from the cart.
 *Mostrar productos como agotados
 *connect google login/registration with frontend
 
 ------------------------UPDATE NOTES-------------------
+------------Apr 04, 2026--------------
+-Tires can be added to cart only if they are in stock.
+-TireCards and productDetails show the stock available.
+-On checkout page NIT and Nota Especial are no longer required to place an order.
 ------------Mar 14, 2026--------------
 -Fixed a bug where when ordering and going back to home the name that just ordered as a guest was showing up as signed in.
 ------------Mar 08, 2026--------------

@@ -14,6 +14,7 @@ function TireCard({
   speed_rating,
   season,
   type,
+  stock,
   description,
   price,
   image_url,
@@ -38,6 +39,9 @@ function TireCard({
           </h2>
           <p className="text-sm text-gray-700 my-2">
             <span className="font-medium">Medidas:</span> {width}/{profile} R{rim_diameter}
+          </p>
+          <p className="text-sm text-gray-700 my-2">
+            <span className="font-medium">Existencias:</span> {stock}
           </p>
           <div className="flex flex-wrap gap-2 my-2 text-xs text-gray-500">
             <span className="border rounded px-2 py-0.5 bg-gray-100">Tipo: {type}</span>

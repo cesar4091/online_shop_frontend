@@ -34,6 +34,7 @@ function ProductDetails() {
     );
   }
 
+  console.log(product)
   const IMAGES = product.image_url || [];
   return (
     <div className="bg-brand-base">
@@ -57,6 +58,7 @@ function ProductDetails() {
 
           <p className="text-2xl text-gray-900 font-bold mb-4">${product.price}</p>
           <p className="text-gray-800 my-4">{product.description}</p>
+          <p className="text-gray-800"><span className="font-bold">Existencias:</span> {product.stock}</p>
 
           <div className='hidden lg:block'>
             <AdditemsControls />

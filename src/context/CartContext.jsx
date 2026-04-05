@@ -22,20 +22,45 @@ export function CartProvider({ children }) {
 
   // Agregar producto (Evita duplicados, solo suma cantidad)
   const addToCart = (product, quantity = 1) => {
-    setCart(currentCart => {
-      const existingItem = currentCart.find(item => item.id === product.id);
+  // 1. Creamos una bandera para saber si excedimos el stock
+  let stockExceeded = false;
 
-      if (existingItem) {
-        return currentCart.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
-      }
-      return [...currentCart, { ...product, quantity }];
-    });
-    setIsCartOpen(true); // NUEVO: Abrir el carrito automáticamente al agregar
-  };
+  setCart(currentCart => {
+    const existingItem = currentCart.find(item => item.id === product.id);
+    
+    // 2. Calculamos cuántos hay actualmente en el carrito (0 si no existe)
+    const currentQuantityInCart = existingItem ? existingItem.quantity : 0;
+    
+    // 3. Calculamos el total proyectado
+    const newTotalQuantity = currentQuantityInCart + quantity;
+
+    // 4. Validamos contra el stock del producto
+    if (newTotalQuantity > product.stock) {
+      stockExceeded = true; // Levantamos la bandera
+      return currentCart;   // Retornamos el carrito intacto, cancelando la adición
+    }
+
+    // 5. Si hay stock suficiente, procedemos normalmente
+    if (existingItem) {
+      return currentCart.map(item =>
+        item.id === product.id
+          ? { ...item, quantity: newTotalQuantity }
+          : item
+      );
+    }
+    
+    return [...currentCart, { ...product, quantity }];
+  });
+
+  // 6. Fuera del setCart, manejamos la experiencia del usuario (UX)
+  if (stockExceeded) {
+    // Aquí puedes usar alert() o tu librería de notificaciones (ej. react-toastify)
+    alert(`¡Lo sentimos! Solo tenemos ${product.stock} unidades disponibles de este producto.`);
+  } else {
+    // Si todo salió bien, abrimos el carrito
+    setIsCartOpen(true); 
+  }
+};
 
   // NUEVO: Funciones para abrir/cerrar manualmente
   const openCart = () => setIsCartOpen(true);
